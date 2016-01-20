@@ -1,0 +1,147 @@
+<ion-view view-title="Account">
+  <ion-content>
+   
+ 
+      <!-- <button ng-click="getPhoto()" class="button button-block button-primary">Take Photo</button>
+      <img ng-src="{{lastPhoto}}" style="max-width: 100%"> -->
+
+    <!-- SCREEN TO LOG IN OR TO SIGN UP -->
+	<div ng-if="!token" ng-show="!newUser" class="padding">
+		{{error}}
+		<div class="list list-inset">
+			<label class="item item-input">
+				<i class="icon ion-at placeholder-icon"></i>
+				<input type="text" placeholder="Mail" ng-model="auth.email" required/>
+			</label>
+			<label class="item item-input">
+				<i class="icon ion-locked placeholder-icon"></i>
+				<input type="password" placeholder="Password" ng-model="auth.password" required/>
+			</label>
+		</div>
+
+		<button class="button button-block button-positive" ng-click="signin()">Log In</button>
+
+	 	<div class="row">
+	  		<div class="col text-center">
+	  			OR
+	  		</div>
+	  	</div>
+
+	  	<button class="button button-block button-positive" ng-click="newUserForm(true)">Sign up</button>
+
+		<!-- <button class="button button-block button-positive" ng-click="me()">Me</button> -->
+	</div>
+
+	<div ng-show="newUser" class="padding">
+		<div class="list list-inset">
+			<label class="item item-input">
+				<i class="icon ion-at placeholder-icon"></i>
+				<input type="text" placeholder="Mail" ng-model="authNew.email"/>
+			</label>
+			<label class="item item-input">
+				<i class="icon ion-locked placeholder-icon"></i>
+				<input type="password" placeholder="Password" ng-model="authNew.password"/>
+			</label>
+			<label class="item item-input">
+				<i class="icon ion-locked placeholder-icon"></i>
+				<input type="password" placeholder="Retape your password" ng-model="authNew.password2"/>
+			</label>
+		</div>
+
+		<div class="list list-inset">
+			<label class="item item-input">
+				<i class="icon ion-ios-compose placeholder-icon"></i>
+				<input type="text" placeholder="Pseudo" ng-model="authNew.pseudo">
+			</label>
+		</div>
+
+		<button class="button button-block button-positive" ng-click="signup()">Sign up</button>
+
+		<button class="button button-block button-positive" ng-click="newUserForm(false)">Already member ? Log In</button>
+	</div>
+
+	<!-- SCREEN TO SEE PERSONNAL INFORMATIONS -->
+	<div ng-if="token" ng-show="!modifyUser">
+		<div class="row">
+	  		<h3 class="col text-center">
+		  		<i class="icon ion-person"></i>
+		  		Hello {{meDetails.pseudo}} !
+	  		</h3>
+	  	</div>
+	  	<div class="row">
+	  		<div ng-if="meDetails.bio" class="col text-center">"{{meDetails.bio}}"</div>
+	  		<div ng-if="!meDetails.bio" class="col text-center placeholder-icon">
+	  			"Add you own small biography in edit profile mode ! "
+	  		</div>
+	  	</div>
+		<br>
+		<div class="item item-divider">
+			Vos informations personnelles : 
+		</div>
+
+		<span class="item item-icon-left">
+    		<i class="icon ion-email"></i>
+		    {{meDetails.email}}
+		</span>
+		<div class="padding">
+			<button class="button button-block button-positive" ng-click="modifyUserForm(true)">Modify</button>
+		</div>
+		<div class="item item-divider">
+			Vos véhicules : 
+		</div>
+		<span class="item item-icon-left" ng-hide="meDetails.vehicle.length">
+			<i class="icon ion-alert"></i>
+			No vehicle
+		</span>
+		<div ng-repeat="vehicle in meDetails.vehicle">
+		</div>
+
+		<div class="padding">
+			<!-- <button class="button button-block button-positive" ng-click="me()">Me</button> -->
+			<button class="button button-block button-positive" ng-click="logout()">Log Out</button>
+		</div>
+	</div>
+
+	<div ng-show="modifyUser">
+		<div class="item item-divider">
+			À propos de vous : 
+		</div>
+		<div class="list list-inset">
+			<label class="item item-input">
+				<i class="icon ion-person placeholder-icon"></i>
+				<input type="text" placeholder="Pseudo" ng-model="modifyNew.pseudo" value="meDetails.pseudo">
+			</label>
+		</div>
+		<div class="list list-inset">
+			<label class="item item-input">
+				<i class="icon ion-ios-compose placeholder-icon"></i>
+				<textarea placeholder="Description" ng-model="modifyNew.bio" value="meDetails.bio"></textarea>
+			</label>
+		</div>
+		<div class="list list-inset">
+			<label class="item item-input">
+				<i class="icon ion-locked placeholder-icon"></i>
+				<input type="password" placeholder="Password" ng-model="modifyNew.password"/>
+			</label>
+			<label class="item item-input">
+				<i class="icon ion-locked placeholder-icon"></i>
+				<input type="password" placeholder="Retape your password" ng-model="modifyNew.password2"/>
+			</label>
+		</div>
+
+		<div class="list list-inset">
+			<label class="item item-input">
+				<i class="icon ion-at placeholder-icon"></i>
+				<input type="text" placeholder="Mail" ng-model="modifyNew.email" value="meDetails.email"/>
+			</label>
+		</div>
+
+		<div class="padding">
+			<button class="button button-block button-positive" ng-click="modify()">Save</button>
+			<button class="button button-block button-positive" ng-click="modifyUserForm(false)">Cancel</button>
+			<button class="button button-block button-assertive" ng-click="deleteUser()">Delete account</button>
+		</div>
+	</div>
+
+  </ion-content>
+</ion-view>

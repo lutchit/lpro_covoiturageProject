@@ -1,0 +1,66 @@
+<ion-view view-title="Routes">
+	<ion-content>
+		<div ng-if="token.get()">
+			<div class="item item-divider calm">
+				Your suggested routes : 
+			</div>
+			{{routes.getSuggested()}}
+			<div ng-repeat="route in routes.getSuggested() | groupByMonthYear" divider-collection-repeat ngShow="suggestedRoutes">
+	        	<ion-item class="item-remove-animate item-avatar item-icon-right" ng-click="toggleGroup(route)" ng-class="{active: isGroupShown(route)}">
+	            	<i class="icon" ng-class="isGroupShown(route) ? 'ion-chevron-up' : 'ion-chevron-down'"></i>
+		            <p>{{route.startingCity}}</p>
+		        	<p>{{route.arrivalCity}}</p>
+		        	<p>{{route.date | date:'dd-MM-yyyy'}}</p>
+	          	</ion-item>
+	          	<ion-item class="item-accordion" ng-show="isGroupShown(route)">
+	          		<p>{{route.startingCity}}</p>
+		        	<p>{{route.arrivalCity}}</p>
+		        	<p>{{route.date | date:'dd-MM-yyyy'}}</p>
+	          	</ion-item>
+	      	</div>
+
+	      	<div ng-if="suggestedRoutes.length == 0">
+	      		<h4 class="text-center">You hadn't suggested routes!</h4>
+	      	</div>
+
+			<div class="item item-divider calm">
+				Routes you participate : 
+			</div>
+
+			<div ng-repeat="route in routes.getParticipated() | groupByMonthYear" divider-collection-repeat ngShow="participatedRoutes">
+	        	<ion-item class="item-remove-animate item-avatar item-icon-right" ng-click="toggleGroup(route)" ng-class="{active: isGroupShown(route)}">
+	            	<i class="icon" ng-class="isGroupShown(route) ? 'ion-chevron-up' : 'ion-chevron-down'"></i>
+		            <p>{{route.startingCity}}</p>
+		        	<p>{{route.arrivalCity}}</p>
+		        	<p>{{route.date | date:'dd-MM-yyyy'}}</p>
+	          	</ion-item>
+	          	<ion-item class="item-accordion" ng-show="isGroupShown(route)">
+	          		<p>{{route.startingCity}}</p>
+		        	<p>{{route.arrivalCity}}</p>
+		        	<p>{{route.date | date:'dd-MM-yyyy'}}</p>
+		        	<div class="button-bar ">
+		        		<a class="button assertive" ng-click="unsubscribe(route)">Unsubscribe</a>
+		        	</div>
+	          	</ion-item>
+	      	</div>
+
+	      	<div ng-if="participatedRoutes.length == 0">
+	      		<h4 class="text-center">You hadn't participated routes!</h4>
+	      	</div>
+
+			<div class="padding">
+				<button class="button button-block button-positive" ng-click="modifyUserForm(true)">Modify</button>
+			</div>
+		</div>
+
+		<div class="padding" ng-if="!token.get()">
+			<h4 class="col text-center">
+				You're almost...
+				</br>
+				</br>
+	        	You need to be identified to access to this page!
+	      	</h4>
+	      	<button class="button button-block button-positive" ng-click="redirectLogin()">Log In or Sign Up</button>
+		</div>
+	</ion-content>
+</ion-view>

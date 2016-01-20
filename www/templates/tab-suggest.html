@@ -1,0 +1,73 @@
+<script id="templates/modal.html" type="text/ng-template">
+  <ion-modal-view style="width: 70%; min-height: 30%;">
+    <ion-header-bar class="bar bar-header bar-positive">
+      <h3 class="title">Youre almost...</h3>
+        <button class="button button-clear button-primary" ng-click="modal.hide()">Cancel</button>
+    </ion-header-bar>
+    <ion-content class="padding">
+      <div class="col text-center">
+          You need to be identified to suggest a route!
+      </div>
+      <button class="button button-block button-positive" ng-click="redirectLogin()">Log In or Sign Up</button>
+    </ion-content>
+  </ion-modal-view>
+</script>
+
+<ion-view view-title="Suggest">
+  <ion-content class="padding">
+
+    <div class="list list-inset">
+      <div class="item item-input">
+        <i class="icon ion-search placeholder-icon"></i>
+        <input name="from" value={{suggest.startingCity}} type="text" ng-autocomplete ng-model="suggest.startingCity" options="options"  placeholder="From"/>
+
+        <i style="margin-right:20px; height:20px;!important"class= "ion-location" ng-click="geoloc()" ></i>
+      </div>
+    </div>
+
+    <div class="list list-inset">
+      <label class="item item-input">
+        <i class="icon ion-search placeholder-icon"></i>
+        <input name="to" type="text" ng-autocomplete ng-model="suggest.arrivalCity" value={{suggest.arrivalCity}} options="options" placeholder="To" >
+      </label>
+    </div>
+
+    <ion-checkbox ng-model="checkBox.allerRetour">Round trip</ion-checkbox>
+
+    <div class="list list-inset">
+      <label class="item item-input">
+        <span class="input-label">Date</span>
+        <input type="date" name="date" ng-model="suggest.date">
+      </label>
+      <label class="item item-input">
+        <span class="input-label">Hour</span>
+        <input type="time" name="hour" ng-model="suggest.hour">
+      </label>
+      <label class="item item-input" ng-show="checkBox.roundTrip">
+        <span class="input-label">Return date</span>
+        <input type="date" name="returnDate" ng-model="suggest.returnDate">
+      </label>
+      <label class="item item-input" ng-show="checkBox.roundTrip">
+        <span class="input-label">Hour</span>
+        <input type="time" name="returnHour" ng-model="suggest.returnHour">
+      </label>
+    </div>
+
+    <div class="list list-inset">
+      <label class="item item-input">
+        <i class="icon ion-calculator placeholder-icon"></i>
+        <input name="seats" type="number" ng-model="suggest.seats" value={{suggest.seats}} placeholder="Seat's number" min="1" max="4">
+      </label>
+    </div>
+
+    <div class="list list-inset">
+      <label class="item item-input">
+        <i class="icon ion-social-usd placeholder-icon"></i>
+        <input name="rate" type="number" ng-model="suggest.rate" value={{suggest.seats}} placeholder="Rate" min="0">
+      </label>
+    </div>
+
+    <button class="button button-block button-positive" ng-click="submitSuggest()">Continue</button>
+
+  </ion-content>
+</ion-view>

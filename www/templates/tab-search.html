@@ -1,0 +1,127 @@
+<ion-view view-title="Search">
+	<ion-content>
+
+		<div ng-show="!viewUser" class="padding">
+			<div class="list list-inset">
+				<div class="item item-input">
+					<i class="icon ion-search placeholder-icon"></i>
+					<input name="from" value={{search.startingCity}} type="text" ng-autocomplete ng-model="search.startingCity" options="options"  placeholder="From"/>
+
+					<i style="margin-right:20px; height:20px;!important"class= "ion-location" ng-click="geoloc()" ></i>
+				</div>
+			</div>
+
+			<div class="list list-inset">
+				<label class="item item-input">
+					<i class="icon ion-search placeholder-icon"></i>
+					<input name="to" type="text" ng-autocomplete ng-model="search.arrivalCity" value={{search.arrivalCity} options="options" placeholder="To">
+				</label>
+			</div>
+
+			<ion-checkbox ng-model="checkbox.check">Round trip</ion-checkbox>
+
+			<div class="list list-inset">
+				<label class="item item-input">
+					<span class="input-label">Date</span>
+				 	<input type="date" name="date" ng-model="search.date">
+				</label>
+				<label class="item item-input" ng-show="checkbox.check">
+					<span class="input-label">Return date</span>
+				 	<input type="date" name="returnDate" ng-model="search.returnDate">
+				</label>
+			</div>
+
+			<button class="button button-block button-positive" ng-click="launchSearch()">Search</button>
+
+			<button class="button button-block button-positive" ng-click="searchAll()">View all routes</button>
+
+			<div class="item item-divider calm">
+				Journey : 
+			</div>
+
+	    	<ion-list>
+	        	<div ng-repeat="route in routesResults | groupByMonthYear" divider-collection-repeat>
+		        	<ion-item class="item-remove-animate item-avatar item-icon-right" ng-click="toggleGroup(route)" ng-class="{active: isGroupShown(route)}">
+		            	<i class="icon" ng-class="isGroupShown(route) ? 'ion-chevron-up' : 'ion-chevron-down'"></i>
+			            <p>{{route.startingCity}}</p>
+			        	<p>{{route.arrivalCity}}</p>
+			        	<p>{{route.date | date:'dd-MM-yyyy'}}</p>
+			        	<p>{{route.rate}}$</p>
+		          	</ion-item>
+		          	<ion-item class="item-accordion" ng-show="isGroupShown(route)">
+		          		<p>{{route.startingCity}}</p>
+			        	<p>{{route.arrivalCity}}</p>
+			        	<p>{{route.date | date:'dd-MM-yyyy'}}</p>
+			        	<p>{{route.rate}}$</p>
+			        	<p>{{route.seats}} available</p>
+			        	<p ng-click="showUser(route.idUser)">User : {{route.idUser}}</p>
+			        	<div class="button-bar ">
+							<a class="button hideAnimate" ng-hide="joinTrue" ng-click="joinRoute(route.id)">Join</a>
+						</div>
+		          	</ion-item>
+	          	</div>
+	      	</ion-list>
+
+	      	<div class="item item-divider calm">
+				Trip back : 
+			</div>
+
+			<ion-list>
+	        	<div ng-repeat="route in routesReturnResults | groupByMonthYear" divider-collection-repeat>
+		        	<ion-item class="item-remove-animate item-avatar item-icon-right" ng-click="toggleGroup(route)" ng-class="{active: isGroupShown(route)}">
+		            	<i class="icon" ng-class="isGroupShown(route) ? 'ion-chevron-up' : 'ion-chevron-down'"></i>
+			            <p>{{route.startingCity}}</p>
+			        	<p>{{route.arrivalCity}}</p>
+			        	<p>{{route.date | date:'dd-MM-yyyy'}}</p>
+			        	<p>{{route.rate}}$</p>
+		          	</ion-item>
+		          	<ion-item class="item-accordion" ng-show="isGroupShown(route)">
+		          		<p>{{route.startingCity}}</p>
+			        	<p>{{route.arrivalCity}}</p>
+			        	<p>{{route.date}}</p>
+			        	<p>{{route.rate}}$</p>
+			        	<p>{{route.seats}} available</p>
+			        	<p ng-click="showUser(route.idUser)">User : {{route.idUser}}</p>
+			        	<div class="button-bar ">
+							<a class="button hideAnimate" ng-hide="joinTrue" ng-click="joinRoute(route.id)">Join</a>
+						</div>
+		          	</ion-item>
+	          	</div>
+	      	</ion-list>
+	      </div>
+
+      	<div ng-show="viewUser">
+			<div class="item item-divider">
+				User informations :
+			</div>
+
+			<span class="item item-icon-left">
+	    		<i class="icon ion-person"></i>
+			    User pseudo : {{userDetails.pseudo}}
+			</span>
+
+			<span class="item item-icon-left">
+				<div class="col text-center">"{{userDetails.bio}}"</div>
+			</span>
+			
+			<span class="item item-icon-left">
+	    		<i class="icon ion-email"></i>
+			     User email : {{userDetails.email}}
+			</span>
+			<div class="item item-divider">
+				Vehicles : 
+			</div>
+			<span class="item item-icon-left" ng-hide="userDetails.vehicle.length">
+				<i class="icon ion-alert"></i>
+				No vehicle
+			</span>
+			<div ng-repeat="vehicle in userDetails.vehicle">
+			</div>
+
+			<div class="padding">
+				<button class="button button-block button-positive" ng-click="hideUserDetails()">Close</button>
+			</div>
+		</div>
+
+	</ion-content>
+</ion-view>
